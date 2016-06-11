@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 
 var app = express();
 app.use(bodyParser.json());
-app.use(require('./controllers/api/posts'));
+app.use('/api/posts', require('./controllers/api/posts'));
 
 app.get('/', function(req, res) {
   res.sendFile('layouts/posts.html', { root: __dirname });

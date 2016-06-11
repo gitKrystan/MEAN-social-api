@@ -41,13 +41,14 @@
       $scope.addPost = function() {
         if($scope.postBody) {
           // add a post with the content set in the input with ng-model="postBody"
-          $scope.posts.unshift({
+          $http.post('/api/posts', {
             username: 'dickeyxxx',
             body: $scope.postBody
+          }).success(function(post) {
+            $scope.posts.unshift(post);
+            // find the input with ng-model="postBody" and set its value to null
+            $scope.postBody = null;
           });
-
-          // find the input with ng-model="postBody" and set its value to null
-          $scope.postBody = null;
         }
       };
     });

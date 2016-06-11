@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/gitKrystan/MEAN-social-api/issues"
   },
-  "homepage": "https://github.com/gitKrystan/MEAN-social-api#readme"
+  "homepage": "https://github.com/gitKrystan/MEAN-social-api#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
 }

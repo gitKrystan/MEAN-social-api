@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  </head>
+  <body ng-app="app">
+    <div ng-controller="PostsCtrl" class="container">
+      <h1>Recent Posts</h1>
+      <input ng-model="postBody" class="form-control">
+      <button ng-click="addPost()" class="btn btn-default">Add Post</button>
+      <ul class="list-group">
+        <li ng-repeat="post in posts" class="list-group-item">
+          <strong>@{{ post.username }}</strong>
+          <span>{{ post.body }}</span>
+        </li>
+      </ul>
+    </div>
+
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js'></script>
+  <script>
+    // Module declaration: first argument is name of module, second is an array
+    // of modules that this module depends on.
+    var app = angular.module('app', []);
+
+    // Controller declaration: first argument is name of controller, second is
+    // the function that builds an instance of the controller.
+    // Dependency inject $scope
+    // $scope is an object you can access in both the html and in the controller
+    // Dependency inject $http
+    app.controller('PostsCtrl', function($scope, $http) {
+      // get posts from our API
+      $http.get('http://localhost:3000/api/posts')
+      .success(function(posts) {
+        $scope.posts = posts;
+      });
+
+      $scope.addPost = function() {
+        if($scope.postBody) {
+          // add a post with the content set in the input with ng-model="postBody"
+          $scope.posts.unshift({
+            username: 'dickeyxxx',
+            body: $scope.postBody
+          });
+
+          // find the input with ng-model="postBody" and set its value to null
+          $scope.postBody = null;
+        }
+      };
+    });
+  </script>
+  </body>
+</html>

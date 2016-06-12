@@ -7,7 +7,8 @@ var app = angular.module('app', []);
 // Dependency inject $scope
 // $scope is an object you can access in both the html and in the controller
 // Dependency inject $http
-app.controller('PostsCtrl', function($scope, PostsSvc) {
+angular.module('app')
+.controller('PostsCtrl', function($scope, PostsSvc) {
   // get posts from our API
   PostsSvc.fetch().success(function(posts) {
     $scope.posts = posts;
@@ -28,7 +29,8 @@ app.controller('PostsCtrl', function($scope, PostsSvc) {
   };
 });
 
-app.service('PostsSvc', function($http) {
+angular.module('app')
+.service('PostsSvc', function($http) {
   this.fetch = function() {
     return $http.get('/api/posts');
   };

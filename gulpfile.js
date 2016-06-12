@@ -11,3 +11,8 @@ gulp.task('js', function() {
     .pipe(uglify())
     .pipe(gulp.dest('assets'));
 });
+
+// build js files then watch for changes
+gulp.task('watch:js', ['js'], function() {
+  gulp.watch('ng/**/*.js', ['js']);
+});

@@ -7,17 +7,16 @@ var app = angular.module('app', []);
 // Dependency inject $scope
 // $scope is an object you can access in both the html and in the controller
 // Dependency inject $http
-app.controller('PostsCtrl', function($scope, $http) {
+app.controller('PostsCtrl', function($scope, PostsSvc) {
   // get posts from our API
-  $http.get('http://localhost:3000/api/posts')
-  .success(function(posts) {
+  PostsSvc.fetch().success(function(posts) {
     $scope.posts = posts;
   });
 
   $scope.addPost = function() {
     if($scope.postBody) {
       // add a post with the content set in the input with ng-model="postBody"
-      $http.post('/api/posts', {
+      PostsSvc.create({
         username: 'dickeyxxx',
         body: $scope.postBody
       }).success(function(post) {
@@ -26,5 +25,15 @@ app.controller('PostsCtrl', function($scope, $http) {
         $scope.postBody = null;
       });
     }
+  };
+});
+
+app.service('PostsSvc', function($http) {
+  this.fetch = function() {
+    return $http.get('/api/posts');
+  };
+
+  this.create = function(post) {
+    return $http.post('/api/posts', post);
   };
 });
